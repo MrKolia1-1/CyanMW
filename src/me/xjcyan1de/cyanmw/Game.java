@@ -1,6 +1,11 @@
 package me.xjcyan1de.cyanmw;
 
+import net.minecraft.server.v1_11_R1.BlockPosition;
+import net.minecraft.server.v1_11_R1.NBTTagCompound;
+import net.minecraft.server.v1_11_R1.TileEntityStructure;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,7 +74,25 @@ class Game implements Listener{
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§aЗелёная команда", "§aпобедила!");
                 p.setGameMode(GameMode.SPECTATOR);
-                //world.getBlockAt(71, 80, 66).setType(Material.STRUCTURE_BLOCK);
+                Block block = world.getBlockAt(71, 80, 66);
+                block.setType(Material.STRUCTURE_BLOCK);
+                TileEntityStructure structure = (TileEntityStructure) ((CraftWorld) block.getWorld()).getHandle().getTileEntity(new BlockPosition(
+                        block.getLocation().getX(),
+                        block.getLocation().getY(),
+                        block.getLocation().getZ()));
+                NBTTagCompound sNBT = new NBTTagCompound();
+                sNBT.setString("mode", "LOAD");
+                sNBT.setString("name", "GreenPegasus");
+                sNBT.setInt("sizeX", 31);
+                sNBT.setInt("sizeY", 17);
+                sNBT.setInt("sizeZ", 23);
+                sNBT.setInt("posX", -15);
+                sNBT.setInt("posY", 0);
+                sNBT.setInt("posZ", 0);
+                sNBT.setByte("showboundingbox", (byte) 1);
+                structure.a(sNBT);
+
+                block.upda
             }
         }
         if (team.equals("RED")) {
