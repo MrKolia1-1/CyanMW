@@ -5,7 +5,7 @@ import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.TileEntityStructure;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,34 +75,26 @@ class Game implements Listener{
                 tmapi.sendTitles(p, "§aЗелёная команда", "§aпобедила!");
                 p.setGameMode(GameMode.SPECTATOR);
                 Block block = world.getBlockAt(71, 80, 66);
-                block.setType(Material.STRUCTURE_BLOCK);
-                TileEntityStructure structure = (TileEntityStructure) ((CraftWorld) block.getWorld()).getHandle().getTileEntity(new BlockPosition(
-                        block.getLocation().getX(),
-                        block.getLocation().getY(),
-                        block.getLocation().getZ()));
-                NBTTagCompound sNBT = new NBTTagCompound();
-                sNBT.setString("mode", "LOAD");
-                sNBT.setString("name", "GreenPegasus");
-                sNBT.setInt("sizeX", 31);
-                sNBT.setInt("sizeY", 17);
-                sNBT.setInt("sizeZ", 23);
-                sNBT.setInt("posX", -15);
-                sNBT.setInt("posY", 0);
-                sNBT.setInt("posZ", 0);
-                sNBT.setByte("showboundingbox", (byte) 1);
-                structure.a(sNBT);
-
-                block.upda
+                block.setType(Material.STRUCTURE_BLOCK, false);
+                BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
+                TileEntityStructure structure = (TileEntityStructure)((CraftPlayer)p).getHandle().world.getTileEntity(pos);
+                structure.a(createNBTstructure("GreenPegasus", 71, 80, 66, 31, 17, 23, -15, 0, 0));
+                world.getBlockAt(71, 81, 66).setType(Material.REDSTONE_BLOCK);
             }
         }
         if (team.equals("RED")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§cКрасная команда", "§cпобедила!");
                 p.setGameMode(GameMode.SPECTATOR);
+                Block block = world.getBlockAt(71, 80, -66);
+                block.setType(Material.STRUCTURE_BLOCK, false);
+                BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
+                TileEntityStructure structure = (TileEntityStructure)((CraftPlayer)p).getHandle().world.getTileEntity(pos);
+                structure.a(createNBTstructure("RedPegasus", 71, 80, -66, 31, 17, 23, -15, 0, -22));
+                world.getBlockAt(71, 81, -66).setType(Material.REDSTONE_BLOCK);
             }
         }
     }
-
 
     static void JoinGame(Player p) {
         p.sendMessage("ты заходишь");
@@ -161,5 +153,32 @@ class Game implements Listener{
             e.setRespawnLocation(GreenSpawn);
             p.setVelocity(new Vector(0, -10, 0));
         }
+    }
+
+    public static NBTTagCompound createNBTstructure(String name, int x1, int y1, int z1, int x2, int y2, int z2, int posx, int posy, int posz) {
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        nbttagcompound.setString("id", "Structure");
+        nbttagcompound.setInt("x", x1);
+        nbttagcompound.setInt("y", y1);
+        nbttagcompound.setInt("z", z1);
+        nbttagcompound.setString("name", name);
+        nbttagcompound.setString("author", "XjCyan1de");
+        nbttagcompound.setString("metadata", "");
+        nbttagcompound.setInt("posX", posx);
+        nbttagcompound.setInt("posY", posy);
+        nbttagcompound.setInt("posZ", posz);
+        nbttagcompound.setInt("sizeX", x2);
+        nbttagcompound.setInt("sizeY", y2);
+        nbttagcompound.setInt("sizeZ", z2);
+        nbttagcompound.setString("rotation", "NONE");
+        nbttagcompound.setString("mirror", "NONE");
+        nbttagcompound.setString("mode", "LOAD");
+        nbttagcompound.setByte("ignoreEntities", (byte) 1);
+        nbttagcompound.setBoolean("powered", false);
+        nbttagcompound.setBoolean("showair", false);
+        nbttagcompound.setBoolean("showboundingbox", true);
+        nbttagcompound.setFloat("integrity", 1.0f);
+        nbttagcompound.setLong("seed", 0);
+        return nbttagcompound;
     }
 }

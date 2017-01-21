@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 
     private void schedulerCheckPortal() {
         if (GameRunning) {
-            PortalCheck.scheduleSyncRepeatingTask(this, Game::GameEnd, 0L, 5L);
+            PortalCheck.scheduleSyncRepeatingTask(this, Game::GameEnd, 0L, 2L);
         } else Main.PortalCheck.cancelAllTasks();
     }
 
