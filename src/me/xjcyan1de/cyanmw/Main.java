@@ -6,39 +6,28 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import static me.xjcyan1de.cyanmw.Game.GameRunning;
-
 public class Main extends JavaPlugin {
 
-    static String prefix = "[CyanMW] ";
+    private static String prefix = "[CyanMW] ";
+    public Main plugin = this;
     private static CommandSender console = Bukkit.getConsoleSender();
-    static BukkitScheduler PortalCheck = Bukkit.getServer().getScheduler();
-    private static BukkitScheduler JoinGame = Bukkit.getServer().getScheduler();
-    public static TitleManagerAPI tmapi;
+    static TitleManagerAPI tmapi;
+    public static BukkitScheduler MWScheduler = Bukkit.getScheduler();
+    public static int PortalCheck, JoinPlayer, StartTimer;
 
     public void onEnable() {
         console.sendMessage(prefix + "§rВключен!");
 
         tmapi = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
         Bukkit.getPluginManager().registerEvents(new Game(), this);
-        schedulerCheckPortal();
-        schedulerAddPlayer();
+
+        PortalCheck = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::GameEnd, 0L, 2L);
+        JoinPlayer = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::AddPlayer, 0L, 5L);
+        StartTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, Game::StartTimer, 0L, 20L);
     }
 
     public void onDisable() {
         console.sendMessage(prefix + "§rВыключен!");
-    }
-
-    private void schedulerCheckPortal() {
-        if (GameRunning) {
-            PortalCheck.scheduleSyncRepeatingTask(this, Game::GameEnd, 0L, 2L);
-        } else Main.PortalCheck.cancelAllTasks();
-    }
-
-    private void schedulerAddPlayer() {
-        if (GameRunning) {
-            JoinGame.scheduleSyncRepeatingTask(this, Game::AddPlayer, 0L, 5L);
-        }
     }
 }
 

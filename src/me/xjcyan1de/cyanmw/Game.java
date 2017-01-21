@@ -12,16 +12,16 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 
-import static me.xjcyan1de.cyanmw.Main.tmapi;
+import static me.xjcyan1de.cyanmw.Main.*;
 import static org.bukkit.Bukkit.getServer;
 
 class Game implements Listener{
-    static boolean GameRunning = true;
-    public static World world = getServer().getWorld("world");
-    static int GreenSize = 0;
-    static int RedSize = 0;
-    static Location RedSpawn = new Location(world, 71.5, 75, -64.5, 0, 0);
-    static Location GreenSpawn = new Location(world, 71.5, 75, 65.5, 180, 0);
+    private static World world = getServer().getWorld("world");
+    public static int GreenSize = 0;
+    public static int RedSize = 0;
+    private static int StartTimerSec = 10;
+    private static Location RedSpawn = new Location(world, 71.5, 75, -64.5, 0, 0);
+    private static Location GreenSpawn = new Location(world, 71.5, 75, 65.5, 180, 0);
 
     static void AddPlayer() {
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -48,21 +48,19 @@ class Game implements Listener{
 
 
     static void GameEnd() {
-        //зелёный портал
-        if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
-            GameRunning = false;
-            Main.PortalCheck.cancelAllTasks();
-            WonGame("RED");
-        }
-        //красный портал
-        if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
-            GameRunning = false;
-            Main.PortalCheck.cancelAllTasks();
-            WonGame("GREEN");
+            if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
+                MWScheduler.cancelTask(PortalCheck);
+                WonGame("RED");
+            }
+            //красный портал
+            if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
+                //MWScheduler
+                MWScheduler.cancelTask(PortalCheck);
+                WonGame("GREEN");
         }
     }
 
-    static void WonGame(String team) {
+    private static void WonGame(String team) {
         if (team.equals("GREEN")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§aЗелёная команда", "§aпобедила!");
@@ -79,7 +77,7 @@ class Game implements Listener{
         }
     }
 
-    static void JoinGame(Player p) {
+    private static void JoinGame(Player p) {
         p.sendMessage("ты заходишь");
         Scoreboard scoreboard = p.getScoreboard();
         Team Red = null;
@@ -115,6 +113,41 @@ class Game implements Listener{
 
         p.sendMessage("Красные "+RedSize);
         p.sendMessage("Зелёные "+GreenSize);
+    }
+
+    static void StartTimer() {
+        if (RedSize == 1 && GreenSize == 1) {
+            String color = null;
+            String subtitle = " ";
+
+            if (StartTimerSec == 10 || StartTimerSec == 9 || StartTimerSec == 8 || StartTimerSec == 7 || StartTimerSec == 6) {
+                color = "§a" + StartTimerSec;
+            }
+            if (StartTimerSec == 5 || StartTimerSec == 4) {
+                color = "§e" + StartTimerSec;
+            }
+
+            if (StartTimerSec == 3 || StartTimerSec == 2) {
+                color = "§c" + StartTimerSec;
+            }
+
+            if (StartTimerSec == 1) {
+                color = "§1" + StartTimerSec;
+            }
+
+            if (StartTimerSec == 0) {
+                //StartTimer.cancelAllTasks();
+                color = "§bВзорвите портал";
+                subtitle = "§bпротивника";
+                MWScheduler.cancelTask(StartTimer);
+            }
+
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                tmapi.sendTitles(p, color, subtitle, 0, 60, 20);
+            }
+
+            StartTimerSec = StartTimerSec - 1;
+        }
     }
 
     @EventHandler

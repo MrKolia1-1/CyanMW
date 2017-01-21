@@ -8,9 +8,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 
-public class StructureBlock {
+class StructureBlock {
 
-    public static void paste(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
+    static void paste(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
 
         Block block = world.getBlockAt(x, y, z);
         block.setType(Material.STRUCTURE_BLOCK, false);
