@@ -2,3 +2,7 @@ name: CyanMW
 main: me.xjcyan1de.cyanmw.Main
 version: 0.1
 author: XjCyan1de
+commands:
+    cyanmw:
+        description: Основная команда CyanMW
+        usage: "/cyanmw"
