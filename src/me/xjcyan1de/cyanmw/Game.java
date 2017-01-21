@@ -2,12 +2,17 @@ package me.xjcyan1de.cyanmw;
 
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
@@ -168,6 +173,27 @@ class Game implements Listener{
         if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
             e.setRespawnLocation(GreenSpawn);
             p.setVelocity(new Vector(0, -10, 0));
+        }
+    }
+
+
+    @EventHandler
+    public void SpawnMob(EntitySpawnEvent event) {
+        ((Guardian) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+    }
+
+
+    public static void MissileSpawn() {
+        for (Entity entity : world.getEntities()) {
+            if ((entity instanceof Guardian)){
+                if (entity.getCustomName().equals("§aЗелёный страж")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("GreenGuardian", world, x, y, z, -1, -5, -10);
+                    entity.remove();
+                }
+            }
         }
     }
 }
