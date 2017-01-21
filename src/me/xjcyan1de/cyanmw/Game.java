@@ -155,21 +155,21 @@ class Game implements Listener{
         }
     }
 
-    public static NBTTagCompound createNBTstructure(String name, int x1, int y1, int z1, int x2, int y2, int z2, int posx, int posy, int posz) {
+    public static NBTTagCompound createNBTstructure(String name, int x, int y, int z, int sizeX, int sizeY, int sizeZ, int posX, int posY, int posZ) {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setString("id", "Structure");
-        nbttagcompound.setInt("x", x1);
-        nbttagcompound.setInt("y", y1);
-        nbttagcompound.setInt("z", z1);
+        nbttagcompound.setInt("x", x);
+        nbttagcompound.setInt("y", y);
+        nbttagcompound.setInt("z", z);
         nbttagcompound.setString("name", name);
         nbttagcompound.setString("author", "XjCyan1de");
         nbttagcompound.setString("metadata", "");
-        nbttagcompound.setInt("posX", posx);
-        nbttagcompound.setInt("posY", posy);
-        nbttagcompound.setInt("posZ", posz);
-        nbttagcompound.setInt("sizeX", x2);
-        nbttagcompound.setInt("sizeY", y2);
-        nbttagcompound.setInt("sizeZ", z2);
+        nbttagcompound.setInt("posX", posX);
+        nbttagcompound.setInt("posY", posY);
+        nbttagcompound.setInt("posZ", posZ);
+        nbttagcompound.setInt("sizeX", sizeX);
+        nbttagcompound.setInt("sizeY", sizeY);
+        nbttagcompound.setInt("sizeZ", sizeZ);
         nbttagcompound.setString("rotation", "NONE");
         nbttagcompound.setString("mirror", "NONE");
         nbttagcompound.setString("mode", "LOAD");
