@@ -18,7 +18,12 @@ class StructureBlock {
         TileEntityStructure structure = (TileEntityStructure)((CraftWorld)world).getHandle().getTileEntity(pos);
         structure.a(createNBTstructure(name, x, y, z, posX, posY, posZ));
         world.getBlockAt(x, y+1, z).setType(Material.REDSTONE_BLOCK);
-
+        if (world.getBlockAt(x, y, z).getType().equals(Material.STRUCTURE_BLOCK)) {
+            world.getBlockAt(x, y, z).setType(Material.AIR);
+            if (world.getBlockAt(x, y+1, z).getType().equals(Material.REDSTONE_BLOCK)) {
+                world.getBlockAt(x, y+1, z).setType(Material.AIR);
+            }
+        }
     }
 
     private static NBTTagCompound createNBTstructure(String name, int x, int y, int z, int posX, int posY, int posZ) {
