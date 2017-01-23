@@ -2,9 +2,7 @@ package me.xjcyan1de.cyanmw;
 
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Guardian;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -53,13 +51,13 @@ class Game implements Listener{
 
 
     static void GameEnd() {
+            //зелёный портал
             if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
                 MWScheduler.cancelTask(PortalCheck);
                 WonGame("RED");
             }
             //красный портал
             if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
-                //MWScheduler
                 MWScheduler.cancelTask(PortalCheck);
                 WonGame("GREEN");
         }
@@ -83,7 +81,6 @@ class Game implements Listener{
     }
 
     private static void JoinGame(Player p) {
-        p.sendMessage("ты заходишь");
         Scoreboard scoreboard = p.getScoreboard();
         Team Red = null;
         Team Green = null;
@@ -179,7 +176,11 @@ class Game implements Listener{
 
     @EventHandler
     public void SpawnMob(EntitySpawnEvent event) {
-        ((Guardian) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Guardian) ((Guardian) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Ocelot) ((Ocelot) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Ghast) ((Ghast) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Witch) ((Witch) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Creeper) ((Creeper) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
     }
 
 
@@ -191,6 +192,82 @@ class Game implements Listener{
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
                     StructureBlock.paste("GreenGuardian", world, x, y, z, -1, -5, -10);
+                    entity.remove();
+                }
+
+                if (entity.getCustomName().equals("§cКрасный страж")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("RedGuardian", world, x, y, z, -1, -5, 3);
+                    entity.remove();
+                }
+            }
+            if ((entity instanceof Ocelot)){
+                if (entity.getCustomName().equals("§aЗелёная молния")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("GreenLightning", world, x, y, z, -1, -5, -12);
+                    entity.remove();
+                }
+
+                if (entity.getCustomName().equals("§cКрасная молния")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("RedLightning", world, x, y, z, -1, -5, 4);
+                    entity.remove();
+                }
+            }
+            if ((entity instanceof Ghast)){
+                if (entity.getCustomName().equals("§aЗелёный Джаггернаут")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("GreenJuggernaut", world, x, y, z, -1, -6, -13);
+                    entity.remove();
+                }
+
+                if (entity.getCustomName().equals("§cКрасный Джаггернаут")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("RedJuggernaut", world, x, y, z, -1, -6, 3);
+                    entity.remove();
+                }
+            }
+            if ((entity instanceof Witch)){
+                if (entity.getCustomName().equals("§aЗелёный противобарьер")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("GreenShieldbuster", world, x, y, z, -1, -6, -17);
+                    entity.remove();
+                }
+
+                if (entity.getCustomName().equals("§cКрасный противобарьер")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("RedShieldbuster", world, x, y, z, -1, -6, 3);
+                    entity.remove();
+                }
+            }
+            if ((entity instanceof Creeper)){
+                if (entity.getCustomName().equals("§aЗелёный томагавк")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("GreenTomahawk", world, x, y, z, -1, -5, -15);
+                    entity.remove();
+                }
+
+                if (entity.getCustomName().equals("§cКрасный томагавк")) {
+                    int x = entity.getLocation().getBlockX();
+                    int y = entity.getLocation().getBlockY();
+                    int z = entity.getLocation().getBlockZ();
+                    StructureBlock.paste("RedTomahawk", world, x, y, z, 0, -5, 3);
                     entity.remove();
                 }
             }

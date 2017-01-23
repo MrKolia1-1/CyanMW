@@ -17,11 +17,12 @@ class StructureBlock {
         BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntityStructure structure = (TileEntityStructure)((CraftWorld)world).getHandle().getTileEntity(pos);
         structure.a(createNBTstructure(name, x, y, z, posX, posY, posZ));
+        Material material = world.getBlockAt(x, y+1, z).getType();
         world.getBlockAt(x, y+1, z).setType(Material.REDSTONE_BLOCK);
         if (world.getBlockAt(x, y, z).getType().equals(Material.STRUCTURE_BLOCK)) {
             world.getBlockAt(x, y, z).setType(Material.AIR);
             if (world.getBlockAt(x, y+1, z).getType().equals(Material.REDSTONE_BLOCK)) {
-                world.getBlockAt(x, y+1, z).setType(Material.AIR);
+                world.getBlockAt(x, y+1, z).setType(material);
             }
         }
     }

@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class Main extends JavaPlugin {
 
-    private static String prefix = "[CyanMW] ";
+    static String prefix = "§3[CyanMW] ";
     public Main plugin = this;
     private static CommandSender console = Bukkit.getConsoleSender();
     static TitleManagerAPI tmapi;
@@ -16,7 +16,7 @@ public class Main extends JavaPlugin {
     public static int PortalCheck, JoinPlayer, StartTimer, PirozhokLauncher;
 
     public void onEnable() {
-        console.sendMessage(prefix + "§rВключен!");
+        console.sendMessage(prefix + "§7Включен!");
 
         tmapi = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
         Bukkit.getPluginManager().registerEvents(new Game(), this);
@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        console.sendMessage(prefix + "§rВыключен!");
+        console.sendMessage(prefix + "§7Выключен!");
     }
 }
 
