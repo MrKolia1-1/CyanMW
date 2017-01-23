@@ -10,13 +10,13 @@ import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 
 class StructureBlock {
 
-    static void paste(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
+    static void load(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
 
         Block block = world.getBlockAt(x, y, z);
         block.setType(Material.STRUCTURE_BLOCK, false);
         BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntityStructure structure = (TileEntityStructure)((CraftWorld)world).getHandle().getTileEntity(pos);
-        structure.a(createNBTstructure(name, x, y, z, posX, posY, posZ));
+        structure.a(loadStructure(name, x, y, z, posX, posY, posZ));
         Material material = world.getBlockAt(x, y+1, z).getType();
         world.getBlockAt(x, y+1, z).setType(Material.REDSTONE_BLOCK);
         if (world.getBlockAt(x, y, z).getType().equals(Material.STRUCTURE_BLOCK)) {
@@ -27,7 +27,7 @@ class StructureBlock {
         }
     }
 
-    private static NBTTagCompound createNBTstructure(String name, int x, int y, int z, int posX, int posY, int posZ) {
+    private static NBTTagCompound loadStructure(String name, int x, int y, int z, int posX, int posY, int posZ) {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setString("id", "Structure");
         nbttagcompound.setInt("x", x);

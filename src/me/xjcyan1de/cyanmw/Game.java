@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
@@ -68,14 +69,14 @@ class Game implements Listener{
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§aЗелёная команда", "§aпобедила!");
                 p.setGameMode(GameMode.SPECTATOR);
-                StructureBlock.paste("GreenPegasus", world, 71, 80, 66, -15, 0, 0);
+                StructureBlock.load("GreenPegasus", world, 71, 80, 66, -15, 0, 0);
             }
         }
         if (team.equals("RED")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§cКрасная команда", "§cпобедила!");
                 p.setGameMode(GameMode.SPECTATOR);
-                StructureBlock.paste("RedPegasus", world, 71, 80, -66, -15, 0, -22);
+                StructureBlock.load("RedPegasus", world, 71, 80, -66, -15, 0, -22);
             }
         }
     }
@@ -183,7 +184,47 @@ class Game implements Listener{
         if (event.getEntity() instanceof Creeper) ((Creeper) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
     }
 
-
+    public static void ShieldSpawn() {
+        for (Entity entity : world.getEntities()) {
+            if ((entity instanceof Snowball)) {
+                int LifeTime = entity.getTicksLived();
+                if (entity.getCustomName() == null) {
+                    for (Entity NearEntity : entity.getNearbyEntities(2, 2, 2)) {
+                        if (NearEntity instanceof Player) {
+                            String pname = NearEntity.getName();
+                            if (((Player) NearEntity).getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                                entity.setCustomName("GreenShield");
+                            }
+                            if (((Player) NearEntity).getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                                entity.setCustomName("RedShield");
+                            }
+                        }
+                    }
+                }
+                if (entity.getCustomName().equals("GreenShield")) {
+                    world.spawnParticle(Particle.FALLING_DUST, entity.getLocation(), 1, new MaterialData(Material.EMERALD_BLOCK));
+                    if (LifeTime >= 20) {
+                        int x = entity.getLocation().getBlockX();
+                        int y = entity.getLocation().getBlockY();
+                        int z = entity.getLocation().getBlockZ();
+                        StructureBlock.load("GreenShield", world, x, y, z, -3, -3, 0);
+                        entity.remove();
+                    }
+                }
+                if (entity.getCustomName().equals("RedShield")) {
+                    world.spawnParticle(Particle.FALLING_DUST, entity.getLocation(), 1, new MaterialData(Material.REDSTONE_BLOCK));
+                    if (LifeTime >= 20) {
+                        int x = entity.getLocation().getBlockX();
+                        int y = entity.getLocation().getBlockY();
+                        int z = entity.getLocation().getBlockZ();
+                        StructureBlock.load("RedShield", world, x, y, z, -3, -3, 0);
+                        entity.remove();
+                    }
+                }
+            }
+        }
+    }
+    
     public static void MissileSpawn() {
         for (Entity entity : world.getEntities()) {
             if ((entity instanceof Guardian)){
@@ -191,7 +232,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("GreenGuardian", world, x, y, z, -1, -5, -10);
+                    StructureBlock.load("GreenGuardian", world, x, y, z, -1, -5, -10);
                     entity.remove();
                 }
 
@@ -199,7 +240,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("RedGuardian", world, x, y, z, -1, -5, 3);
+                    StructureBlock.load("RedGuardian", world, x, y, z, -1, -5, 3);
                     entity.remove();
                 }
             }
@@ -208,7 +249,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("GreenLightning", world, x, y, z, -1, -5, -12);
+                    StructureBlock.load("GreenLightning", world, x, y, z, -1, -5, -12);
                     entity.remove();
                 }
 
@@ -216,7 +257,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("RedLightning", world, x, y, z, -1, -5, 4);
+                    StructureBlock.load("RedLightning", world, x, y, z, -1, -5, 4);
                     entity.remove();
                 }
             }
@@ -225,7 +266,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("GreenJuggernaut", world, x, y, z, -1, -6, -13);
+                    StructureBlock.load("GreenJuggernaut", world, x, y, z, -1, -6, -13);
                     entity.remove();
                 }
 
@@ -233,7 +274,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("RedJuggernaut", world, x, y, z, -1, -6, 3);
+                    StructureBlock.load("RedJuggernaut", world, x, y, z, -1, -6, 3);
                     entity.remove();
                 }
             }
@@ -242,7 +283,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("GreenShieldbuster", world, x, y, z, -1, -6, -17);
+                    StructureBlock.load("GreenShieldbuster", world, x, y, z, -1, -6, -17);
                     entity.remove();
                 }
 
@@ -250,7 +291,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("RedShieldbuster", world, x, y, z, -1, -6, 3);
+                    StructureBlock.load("RedShieldbuster", world, x, y, z, -1, -6, 3);
                     entity.remove();
                 }
             }
@@ -259,7 +300,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("GreenTomahawk", world, x, y, z, -1, -5, -15);
+                    StructureBlock.load("GreenTomahawk", world, x, y, z, -1, -5, -15);
                     entity.remove();
                 }
 
@@ -267,7 +308,7 @@ class Game implements Listener{
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
                     int z = entity.getLocation().getBlockZ();
-                    StructureBlock.paste("RedTomahawk", world, x, y, z, 0, -5, 3);
+                    StructureBlock.load("RedTomahawk", world, x, y, z, 0, -5, 3);
                     entity.remove();
                 }
             }
