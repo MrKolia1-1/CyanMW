@@ -23,7 +23,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёный страж");
+        } else p.sendMessage("§7У вас уже есть Зелёный страж, используйте его");
     }
 
     public static void RedGuardian(Player p) {
@@ -58,7 +59,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёная молния");
+        } else p.sendMessage("§7У вас уже есть Зелёная молния, используйте её");
     }
 
     public static void RedLightning(Player p) {
@@ -93,7 +95,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёный Джаггернаут");
+        } else p.sendMessage("§7У вас уже есть Зелёный Джаггернаут, используйте его");
     }
 
     public static void RedJuggernaut(Player p) {
@@ -128,7 +131,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёный противобарьер");
+        } else p.sendMessage("§7У вас уже есть Зелёный противобарьер, используйте его");
     }
 
     public static void RedShieldbuster(Player p) {
@@ -163,7 +167,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёный томагавк");
+        } else p.sendMessage("§7У вас уже есть Зелёный томагавк, используйте его");
     }
 
     public static void RedTomahawk(Player p) {
@@ -195,7 +200,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-        }
+            p.sendMessage("§7+ Зелёный барьер");
+        } else p.sendMessage("§7У вас уже есть Зелёный барьер, используйте его");
     }
 
     public static void RedShield(Player p) {
