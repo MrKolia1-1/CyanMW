@@ -13,11 +13,16 @@ public class Main extends JavaPlugin {
     private static CommandSender console = Bukkit.getConsoleSender();
     static TitleManagerAPI tmapi;
     public static BukkitScheduler MWScheduler = Bukkit.getScheduler();
-    public static int PortalCheck, JoinPlayer, StartTimer, MissileSpawn, BarrierSpawn, FireballSpawn, GiveRandomItem;
+    public static int PortalCheck, JoinPlayer, StartTimer, MissileSpawn, BarrierSpawn, FireballSpawn, MainSchedulerReg;
+
+    public static int cfgGiveItemCooldown, cfgTimeAfterGame;
+
 
     public void onEnable() {
         tmapi = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
         saveDefaultConfig();
+        cfgGiveItemCooldown = plugin.getConfig().getInt("GiveItemCooldown");
+        cfgTimeAfterGame = plugin.getConfig().getInt("TimeAfterGame");
         Bukkit.getPluginManager().registerEvents(new Game(), this);
         getCommand("cyanmw").setExecutor(new Command());
 
@@ -27,14 +32,23 @@ public class Main extends JavaPlugin {
         MissileSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::MissileSpawn, 0L, 1L);
         BarrierSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::ShieldSpawn, 0L, 1L);
         FireballSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::FireballSpawn, 0L, 1L);
-        long cfgGiveItem = getConfig().getInt("GiveItemCooldown")*20;
-        GiveRandomItem = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::GiveRandomItem, 0L, cfgGiveItem);
+        //TODO: Перенести все шедулеры в отдельный класс
+        MainSchedulerReg = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, MainScheduler::RunTasks, 0L, 1L);
+
 
         console.sendMessage(prefix + "§7Включен!");
     }
 
+    /*
+    public void SchedulerRandomGiveItem() {
+        long cfgGiveItem = plugin.getConfig().getInt("GiveItemCooldown")*20;
+        GiveRandomItem = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::GiveRandomItem, 0L, cfgGiveItem);
+    }
+    */
+
     public void onDisable() {
         console.sendMessage(prefix + "§7Выключен!");
     }
+
 }
 
