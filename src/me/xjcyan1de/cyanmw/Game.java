@@ -16,14 +16,18 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 
+import java.util.Random;
+
 import static me.xjcyan1de.cyanmw.Main.*;
 import static org.bukkit.Bukkit.getServer;
 
-class Game implements Listener{
+class Game implements Listener {
     private static World world = getServer().getWorld("world");
+    public static Random randomizer = new Random();
     public static int GreenSize = 0;
     public static int RedSize = 0;
     private static int StartTimerSec = 10;
+    public static int LastMissile = 0;
     private static Location RedSpawn = new Location(world, 71.5, 75, -64.5, 0, 0);
     private static Location GreenSpawn = new Location(world, 71.5, 75, 65.5, 180, 0);
 
@@ -52,15 +56,15 @@ class Game implements Listener{
 
 
     static void GameEnd() {
-            //зелёный портал
-            if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
-                MWScheduler.cancelTask(PortalCheck);
-                WonGame("RED");
-            }
-            //красный портал
-            if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
-                MWScheduler.cancelTask(PortalCheck);
-                WonGame("GREEN");
+        //зелёный портал
+        if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
+            MWScheduler.cancelTask(PortalCheck);
+            WonGame("RED");
+        }
+        //красный портал
+        if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
+            MWScheduler.cancelTask(PortalCheck);
+            WonGame("GREEN");
         }
     }
 
@@ -90,11 +94,12 @@ class Game implements Listener{
             Green = scoreboard.registerNewTeam("Зелёные");
             Red.setPrefix("§c");
             Green.setPrefix("§a");
-        } catch (IllegalArgumentException ignored){}
+        } catch (IllegalArgumentException ignored) {
+        }
 
         if (RedSize >= GreenSize) {
             scoreboard.getTeam("Зелёные").addEntry(p.getName());
-            GreenSize = GreenSize+1;
+            GreenSize = GreenSize + 1;
 
             p.setBedSpawnLocation(GreenSpawn);
             p.teleport(GreenSpawn);
@@ -105,7 +110,7 @@ class Game implements Listener{
 
         } else {
             scoreboard.getTeam("Красные").addEntry(p.getName());
-            RedSize = RedSize+1;
+            RedSize = RedSize + 1;
 
             p.teleport(RedSpawn);
 
@@ -114,8 +119,8 @@ class Game implements Listener{
             p.getInventory().addItem(bow);
         }
 
-        p.sendMessage("Красные "+RedSize);
-        p.sendMessage("Зелёные "+GreenSize);
+        p.sendMessage("Красные " + RedSize);
+        p.sendMessage("Зелёные " + GreenSize);
     }
 
     static void StartTimer() {
@@ -174,15 +179,106 @@ class Game implements Listener{
         }
     }
 
+    public static void GiveRandomItem() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            String pname = p.getName();
+            int random = randomizer.nextInt(1+7);
+            if (random == LastMissile) {
+                break;
+            }
+            if (random == 0) {
+                LastMissile = 0;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenGuardian(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedGuardian(p);
+                }
+            }
+            if (random == 1) {
+                LastMissile = 1;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenLightning(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedLightning(p);
+                }
+            }
+            if (random == 2) {
+                LastMissile = 2;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenJuggernaut(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedJuggernaut(p);
+                }
+            }
+            if (random == 3) {
+                LastMissile = 3;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenShieldbuster(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedShieldbuster(p);
+                }
+            }
+            if (random == 4) {
+                LastMissile = 4;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenTomahawk(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedTomahawk(p);
+                }
+            }
+            if (random == 5) {
+                LastMissile = 5;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.GreenShield(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.RedShield(p);
+                }
+            }
+            if (random == 6) {
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    GiveItem.Fireball(p);
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    GiveItem.Fireball(p);
+                }
+            }
+            if (random == 7) {
+                LastMissile = 7;
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
+                    p.getInventory().addItem(new ItemStack(Material.ARROW, 3));
+                    p.sendMessage("§7+ 3 стрелы");
+                }
+                if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
+                    p.getInventory().addItem(new ItemStack(Material.ARROW, 3));
+                    p.sendMessage("§7+ 3 стрелы");
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void SpawnMob(EntitySpawnEvent event) {
-        if (event.getEntity() instanceof Guardian) ((Guardian) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
-        if (event.getEntity() instanceof Ocelot) ((Ocelot) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
-        if (event.getEntity() instanceof Ghast) ((Ghast) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
-        if (event.getEntity() instanceof Witch) ((Witch) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
-        if (event.getEntity() instanceof Creeper) ((Creeper) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Guardian)
+            ((Guardian) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Ocelot)
+            ((Ocelot) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Ghast)
+            ((Ghast) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Witch)
+            ((Witch) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Creeper)
+            ((Creeper) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+        if (event.getEntity() instanceof Blaze)
+            ((Blaze) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 5, 5), true);
+
     }
+
 
     public static void ShieldSpawn() {
         for (Entity entity : world.getEntities()) {
@@ -224,10 +320,21 @@ class Game implements Listener{
             }
         }
     }
-    
-    public static void MissileSpawn() {
+
+    static void FireballSpawn() {
         for (Entity entity : world.getEntities()) {
-            if ((entity instanceof Guardian)){
+            if ((entity instanceof Blaze)) {
+                Location loc = new Location(world, entity.getLocation().getBlockX(), entity.getLocation().getBlockY() + 1, entity.getLocation().getBlockZ());
+                entity.remove();
+                Fireball fireball = (Fireball) world.spawnEntity(loc, EntityType.FIREBALL);
+                fireball.setDirection(new Vector(0, 0, 0));
+            }
+        }
+    }
+
+    static void MissileSpawn() {
+        for (Entity entity : world.getEntities()) {
+            if ((entity instanceof Guardian)) {
                 if (entity.getCustomName().equals("§aЗелёный страж")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
@@ -244,7 +351,7 @@ class Game implements Listener{
                     entity.remove();
                 }
             }
-            if ((entity instanceof Ocelot)){
+            if ((entity instanceof Ocelot)) {
                 if (entity.getCustomName().equals("§aЗелёная молния")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
@@ -261,7 +368,7 @@ class Game implements Listener{
                     entity.remove();
                 }
             }
-            if ((entity instanceof Ghast)){
+            if ((entity instanceof Ghast)) {
                 if (entity.getCustomName().equals("§aЗелёный Джаггернаут")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
@@ -278,7 +385,7 @@ class Game implements Listener{
                     entity.remove();
                 }
             }
-            if ((entity instanceof Witch)){
+            if ((entity instanceof Witch)) {
                 if (entity.getCustomName().equals("§aЗелёный противобарьер")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();
@@ -295,7 +402,7 @@ class Game implements Listener{
                     entity.remove();
                 }
             }
-            if ((entity instanceof Creeper)){
+            if ((entity instanceof Creeper)) {
                 if (entity.getCustomName().equals("§aЗелёный томагавк")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();

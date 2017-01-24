@@ -13,12 +13,11 @@ public class Main extends JavaPlugin {
     private static CommandSender console = Bukkit.getConsoleSender();
     static TitleManagerAPI tmapi;
     public static BukkitScheduler MWScheduler = Bukkit.getScheduler();
-    public static int PortalCheck, JoinPlayer, StartTimer, MissileSpawn, BarrierSpawn;
+    public static int PortalCheck, JoinPlayer, StartTimer, MissileSpawn, BarrierSpawn, FireballSpawn, GiveRandomItem;
 
     public void onEnable() {
-        console.sendMessage(prefix + "§7Включен!");
-
         tmapi = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
+        saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new Game(), this);
         getCommand("cyanmw").setExecutor(new Command());
 
@@ -27,7 +26,11 @@ public class Main extends JavaPlugin {
         StartTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::StartTimer, 0L, 20L);
         MissileSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::MissileSpawn, 0L, 1L);
         BarrierSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::ShieldSpawn, 0L, 1L);
+        FireballSpawn = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::FireballSpawn, 0L, 1L);
+        long cfgGiveItem = getConfig().getInt("GiveItemCooldown")*20;
+        GiveRandomItem = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, Game::GiveRandomItem, 0L, cfgGiveItem);
 
+        console.sendMessage(prefix + "§7Включен!");
     }
 
     public void onDisable() {
