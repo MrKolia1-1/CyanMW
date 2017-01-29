@@ -1,6 +1,6 @@
 name: CyanMW
 main: me.xjcyan1de.cyanmw.Main
-version: 0.1
+version: 0.3.0 beta
 author: XjCyan1de
 commands:
     cyanmw:

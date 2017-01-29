@@ -8,10 +8,22 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
+import static me.xjcyan1de.cyanmw.Main.cfgUseResourcePack;
+
 public class GiveItem {
+    private static ItemStack item;
+    private static ItemMeta meta;
+    //Я афк...
+    //TODO: Сделать чтобы всем предметам выдавался тег Unbreakable=true если UseResourcePack=true
     public static void GreenGuardian(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.GUARDIAN, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 1);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.GUARDIAN, 1);
+        meta = item.getItemMeta();
         ArrayList<String> lore = new ArrayList<String>();
         meta.setDisplayName("§aЗелёный страж");
         lore.add(" ");
@@ -28,9 +40,15 @@ public class GiveItem {
     }
 
     public static void RedGuardian(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.GUARDIAN, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 2);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.GUARDIAN, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасный страж");
         lore.add(" ");
         lore.add("§7Защищает от стрел");
@@ -46,9 +64,15 @@ public class GiveItem {
     }
 
     public static void GreenLightning(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.OCELOT, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 3);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.OCELOT, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§aЗелёная молния");
         lore.add(" ");
         lore.add("§7Высокоскростная ракета");
@@ -64,9 +88,15 @@ public class GiveItem {
     }
 
     public static void RedLightning(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.OCELOT, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 4);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.OCELOT, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасная молния");
         lore.add(" ");
         lore.add("§7Высокоскростная ракета");
@@ -82,9 +112,15 @@ public class GiveItem {
     }
 
     public static void GreenJuggernaut(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.GHAST, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 5);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.GHAST, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§aЗелёный Джаггернаут");
         lore.add(" ");
         lore.add("§7Огромный урон");
@@ -100,9 +136,15 @@ public class GiveItem {
     }
 
     public static void RedJuggernaut(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.GHAST, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 6);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.GHAST, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасный Джаггернаут");
         lore.add(" ");
         lore.add("§7Огромный урон");
@@ -118,9 +160,15 @@ public class GiveItem {
     }
 
     public static void GreenShieldbuster(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.WITCH, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 7);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.WITCH, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§aЗелёный противобарьер");
         lore.add(" ");
         lore.add("§7Пробивает барьер");
@@ -136,9 +184,15 @@ public class GiveItem {
     }
 
     public static void RedShieldbuster(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.WITCH, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 8);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.WITCH, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасный противобарьер");
         lore.add(" ");
         lore.add("§7Пробивает барьер");
@@ -154,9 +208,15 @@ public class GiveItem {
     }
 
     public static void GreenTomahawk(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.CREEPER, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 9);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.CREEPER, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§aЗелёный томагавк");
         lore.add(" ");
         lore.add("§7Фронтальный взрыв");
@@ -172,9 +232,15 @@ public class GiveItem {
     }
 
     public static void RedTomahawk(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.CREEPER, 1);
-        ItemMeta meta = item.getItemMeta();
+        if (cfgUseResourcePack) {
+            item = new ItemStack(Material.GOLD_HOE, 1);
+            item.setDurability((short) 10);
+            meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            item.setItemMeta(meta);
+        } else item = SpawnEgg.get(EntityType.CREEPER, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасный томагавк");
         lore.add(" ");
         lore.add("§7Фронтальный взрыв");
@@ -190,9 +256,9 @@ public class GiveItem {
     }
 
     public static void GreenShield(Player p) {
-        ItemStack item = new ItemStack(Material.SNOW_BALL, 1);
-        ItemMeta meta = item.getItemMeta();
+        item = new ItemStack(Material.SNOW_BALL, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§aЗелёный барьер");
         lore.add(" ");
         lore.add("§7Останавливает большинство ракет");
@@ -205,9 +271,9 @@ public class GiveItem {
     }
 
     public static void RedShield(Player p) {
-        ItemStack item = new ItemStack(Material.SNOW_BALL, 1);
-        ItemMeta meta = item.getItemMeta();
+        item = new ItemStack(Material.SNOW_BALL, 1);
         ArrayList<String> lore = new ArrayList<String>();
+        meta = item.getItemMeta();
         meta.setDisplayName("§cКрасный барьер");
         lore.add(" ");
         lore.add("§7Останавливает большинство ракет");
@@ -220,8 +286,8 @@ public class GiveItem {
     }
 
     public static void Fireball(Player p) {
-        ItemStack item = SpawnEgg.get(EntityType.BLAZE, 1);
-        ItemMeta meta = item.getItemMeta();
+        item = SpawnEgg.get(EntityType.BLAZE, 1);
+        meta = item.getItemMeta();
         meta.setDisplayName("§eОгненный шар");
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {

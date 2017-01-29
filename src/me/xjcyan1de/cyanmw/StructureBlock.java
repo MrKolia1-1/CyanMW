@@ -12,17 +12,23 @@ class StructureBlock {
 
     static void load(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
 
-        Block block = world.getBlockAt(x, y, z);
+        Block block = world.getBlockAt(x,y,z);
+
+        Material blockTypeBefore = world.getBlockAt(x, y, z).getType();
+        //MaterialData blockDataBefore = world.getBlockAt(x, y, z).getState();
         block.setType(Material.STRUCTURE_BLOCK, false);
         BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
         TileEntityStructure structure = (TileEntityStructure)((CraftWorld)world).getHandle().getTileEntity(pos);
         structure.a(loadStructure(name, x, y, z, posX, posY, posZ));
-        Material material = world.getBlockAt(x, y+1, z).getType();
+        Material block1TypeBefore = world.getBlockAt(x, y+1, z).getType();
+        //MaterialData block1DataBefore = world.getBlockAt(x, y+1, z).getState().getData();
         world.getBlockAt(x, y+1, z).setType(Material.REDSTONE_BLOCK);
         if (world.getBlockAt(x, y, z).getType().equals(Material.STRUCTURE_BLOCK)) {
-            world.getBlockAt(x, y, z).setType(Material.AIR);
+            world.getBlockAt(x, y, z).setType(blockTypeBefore);
+            //world.getBlockAt(x,y,z).getState().setData(blockDataBefore);
             if (world.getBlockAt(x, y+1, z).getType().equals(Material.REDSTONE_BLOCK)) {
-                world.getBlockAt(x, y+1, z).setType(material);
+                world.getBlockAt(x, y+1, z).setType(block1TypeBefore);
+                //world.getBlockAt(x, y+1, z).getState().setData(block1DataBefore);
             }
         }
     }

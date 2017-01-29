@@ -5,8 +5,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,16 +23,16 @@ import org.bukkit.util.Vector;
 import java.util.Random;
 
 import static me.xjcyan1de.cyanmw.Main.*;
-import static me.xjcyan1de.cyanmw.MainScheduler.*;
+import static me.xjcyan1de.cyanmw.MainScheduler.schRandomItemGive;
+import static me.xjcyan1de.cyanmw.MainScheduler.timer;
 import static org.bukkit.Bukkit.getServer;
 
 class Game implements Listener {
-    private static World world = getServer().getWorld("world");
+    public static World world = getServer().getWorld("world");
     public static Random randomizer = new Random();
     public static int GreenSize = 0;
     public static int RedSize = 0;
     private static int StartTimerSec = 10;
-    public static int LastMissile = 0;
     public static boolean GameRunning = false;
     private static Location RedSpawn = new Location(world, 71.5, 75, -64.5, 0, 0);
     private static Location GreenSpawn = new Location(world, 71.5, 75, 65.5, 180, 0);
@@ -59,30 +61,7 @@ class Game implements Listener {
     }
 
 
-    static void GameEnd() {
-        if (GreenSize == 1 && RedSize == 1) {
-            //зелёный портал
-            if (!world.getBlockAt(70, 70, 72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, 72).getType().equals(Material.PORTAL)) {
-                MWScheduler.cancelTask(PortalCheck);
-                schRandomItemGive = false;
-                WonGame("RED");
-                Bukkit.broadcastMessage("§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
-                timer = 1;
-                schPostGame = true;
-            }
-            //красный портал
-            if (!world.getBlockAt(70, 70, -72).getType().equals(Material.PORTAL) || !world.getBlockAt(72, 70, -72).getType().equals(Material.PORTAL)) {
-                MWScheduler.cancelTask(PortalCheck);
-                schRandomItemGive = false;
-                WonGame("GREEN");
-                Bukkit.broadcastMessage("§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
-                timer = 1;
-                schPostGame = true;
-            }
-        }
-    }
-
-    private static void WonGame(String team) {
+    public static void WonGame(String team) {
         if (team.equals("GREEN")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 tmapi.sendTitles(p, "§aЗелёная команда", "§aпобедила!");
@@ -120,7 +99,6 @@ class Game implements Listener {
         String pname = p.getName();
         Scoreboard scoreboard = p.getScoreboard();
         TryRegisterTeam(p);
-
         if (RedSize >= GreenSize) {
             scoreboard.getTeam("Зелёные").addEntry(p.getName());
             Bukkit.broadcastMessage("§a"+pname+" §aзашёл за зелёную команду");
@@ -194,7 +172,7 @@ class Game implements Listener {
     }
 
     static void StartTimer() {
-        if (RedSize == 1 && GreenSize == 1) {
+        if (RedSize >= 1 && GreenSize >= 1) {
             String color = null;
             String subtitle = " ";
 
@@ -210,7 +188,7 @@ class Game implements Listener {
             }
 
             if (StartTimerSec == 1) {
-                color = "§1" + StartTimerSec;
+                color = "§4" + StartTimerSec;
             }
 
             if (StartTimerSec == 0) {
@@ -305,6 +283,55 @@ class Game implements Listener {
     }
 
 
+    @EventHandler
+    public void HoeClick(PlayerInteractEvent event) {
+        if (cfgUseResourcePack && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Player p = event.getPlayer();
+            String itemname = null;
+            try {
+                itemname = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
+            } catch (NullPointerException ignored){}
+            int x = event.getClickedBlock().getLocation().getBlockX();
+            int y = event.getClickedBlock().getLocation().getBlockY();
+            int z = event.getClickedBlock().getLocation().getBlockZ();
+            if (p.getInventory().getItemInMainHand().getType().equals(Material.GOLD_HOE)) {
+                try {
+                    if (itemname.equals("§aЗелёный страж")) {
+                        StructureBlock.load("GreenGuardian", world, x, y + 1, z, -1, -5, -10);
+                    }
+                    if (itemname.equals("§cКрасный страж")) {
+                        StructureBlock.load("RedGuardian", world, x, y + 1, z, -1, -5, 3);
+                    }
+                    if (itemname.equals("§aЗелёная молния")) {
+                        StructureBlock.load("GreenLightning", world, x, y + 1, z, -1, -5, -12);
+                    }
+                    if (itemname.equals("§cКрасная молния")) {
+                        StructureBlock.load("RedLightning", world, x, y + 1, z, -1, -5, 4);
+                    }
+                    if (itemname.equals("§aЗелёный Джаггернаут")) {
+                        StructureBlock.load("GreenJuggernaut", world, x, y + 1, z, -1, -6, -13);
+                    }
+                    if (itemname.equals("§cКрасный Джаггернаут")) {
+                        StructureBlock.load("RedJuggernaut", world, x, y + 1, z, -1, -6, 3);
+                    }
+                    if (itemname.equals("§aЗелёный противобарьер")) {
+                        StructureBlock.load("GreenShieldbuster", world, x, y + 1, z, -1, -6, -17);
+                    }
+                    if (itemname.equals("§cКрасный противобарьер")) {
+                        StructureBlock.load("RedShieldbuster", world, x, y + 1, z, -1, -6, 3);
+                    }
+                    if (itemname.equals("§aЗелёный томагавк")) {
+                        StructureBlock.load("GreenTomahawk", world, x, y + 1, z, -1, -5, -15);
+                    }
+                    if (itemname.equals("§cКрасный томагавк")) {
+                        StructureBlock.load("RedTomahawk", world, x, y + 1, z, 0, -5, 3);
+                    }
+                } catch (NullPointerException ignored){}
+                event.getPlayer().getInventory().setItemInMainHand(null);
+            }
+        }
+    }
+
     public static void ShieldSpawn() {
         for (Entity entity : world.getEntities()) {
             if ((entity instanceof Snowball)) {
@@ -377,6 +404,9 @@ class Game implements Listener {
                 }
             }
             if ((entity instanceof Ocelot)) {
+                if (entity.getCustomName() == null) {
+                    entity.remove();
+                }
                 if (entity.getCustomName().equals("§aЗелёная молния")) {
                     int x = entity.getLocation().getBlockX();
                     int y = entity.getLocation().getBlockY();

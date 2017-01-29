@@ -1,1 +1,3 @@
-GiveItemCooldown: 1
+GiveItemCooldown: 30
+TimeAfterGame: 30
+UseResourcePack: true
