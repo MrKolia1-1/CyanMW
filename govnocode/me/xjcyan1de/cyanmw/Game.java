@@ -85,11 +85,13 @@ class Game implements Listener {
         try {
             Green = scoreboard.registerNewTeam("Зелёные");
             Green.setPrefix("§a");
+            Green.setAllowFriendlyFire(false);
         } catch (IllegalArgumentException ignored) {
         }
         try {
             Red = scoreboard.registerNewTeam("Красные");
             Red.setPrefix("§c");
+            Red.setAllowFriendlyFire(false);
 
         } catch (IllegalArgumentException ignored) {
         }

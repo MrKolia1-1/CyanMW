@@ -1,21 +1,27 @@
 package me.xjcyan1de.cyanmw;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import static me.xjcyan1de.cyanmw.Game.*;
 import static me.xjcyan1de.cyanmw.Main.cfgGiveItemCooldown;
 import static me.xjcyan1de.cyanmw.Main.cfgTimeAfterGame;
+import static me.xjcyan1de.cyanmw.Main.tmapi;
 
 public class MainScheduler {
 
+    static public Plugin plugin = Bukkit.getPluginManager().getPlugin("CyanMW");
     public static int timer;
     public static boolean schRandomItemGive = false;
     public static boolean schPostGame = false;
     public static boolean schPortalCheck = true;
+    public static int postgametimer = 30;
 
 
     //Таймер
@@ -113,11 +119,11 @@ public class MainScheduler {
                     try {
                         if (p.getScoreboard().getEntryTeam(pname).getName().equals("Зелёные")) {
                             p.getInventory().addItem(new ItemStack(Material.ARROW, 3));
-                            p.sendMessage("§7+ 3 стрелы");
+                            tmapi.sendActionbar(p, "§e+ 3 стрелы");
                         }
                         if (p.getScoreboard().getEntryTeam(pname).getName().equals("Красные")) {
                             p.getInventory().addItem(new ItemStack(Material.ARROW, 3));
-                            p.sendMessage("§7+ 3 стрелы");
+                            tmapi.sendActionbar(p, "§e+ 3 стрелы");
                         }
                     } catch (NullPointerException ignored){}
                 }
@@ -133,7 +139,9 @@ public class MainScheduler {
                 schPortalCheck = false;
                 schRandomItemGive = false;
                 WonGame("RED");
-                Bukkit.broadcastMessage("§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    tmapi.sendActionbar(p, "§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
+                }
                 timer = 1;
                 schPostGame = true;
             }
@@ -142,7 +150,9 @@ public class MainScheduler {
                 schPortalCheck = false;
                 schRandomItemGive = false;
                 WonGame("GREEN");
-                Bukkit.broadcastMessage("§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    tmapi.sendActionbar(p, "§eСеврер перезапустится через " + cfgTimeAfterGame + " секунд");
+                }
                 timer = 1;
                 schPostGame = true;
             }
@@ -150,17 +160,19 @@ public class MainScheduler {
     }
 
     public static void PostGame() {
-
-        int tick = cfgTimeAfterGame * 20;
-        if (schPostGame && timer % tick == 0) {
-            //todo: сделать отправку игроков на сервер после конца игры
-            /*
-            ServerInfo target = ProxyServer.getInstance().getServerInfo("survival");
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                p.connect(target);
+        if (schPostGame && timer % 20 == 0) {
+            if (postgametimer == 1) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("Connect");
+                    out.writeUTF("hub");
+                    p.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+                }
             }
-            */
-            Bukkit.getServer().spigot().restart();
+            if (postgametimer == -1) {
+                Bukkit.spigot().restart();
+            }
+            postgametimer = postgametimer-1;
         }
     }
 

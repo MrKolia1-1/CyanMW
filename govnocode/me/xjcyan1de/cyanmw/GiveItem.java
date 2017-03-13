@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 import static me.xjcyan1de.cyanmw.Main.cfgUseResourcePack;
+import static me.xjcyan1de.cyanmw.Main.tmapi;
 
 public class GiveItem {
     private static ItemStack item;
@@ -35,8 +36,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёный страж");
-        } else p.sendMessage("§7У вас уже есть Зелёный страж, используйте его");
+            tmapi.sendActionbar(p, "§e+ Зелёный страж");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёный страж, используйте его");
     }
 
     public static void RedGuardian(Player p) {
@@ -59,8 +60,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красный страж");
-        } else p.sendMessage("§7У вас уже есть Красный страж, используйте его");
+            tmapi.sendActionbar(p, "§e+ Красный страж");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красный страж, используйте его");
     }
 
     public static void GreenLightning(Player p) {
@@ -83,8 +84,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёная молния");
-        } else p.sendMessage("§7У вас уже есть Зелёная молния, используйте её");
+            tmapi.sendActionbar(p, "§e+ Зелёная молния");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёная молния, используйте её");
     }
 
     public static void RedLightning(Player p) {
@@ -107,8 +108,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красная молния");
-        } else p.sendMessage("§7У вас уже есть Красная молния, используйте её");
+            tmapi.sendActionbar(p, "§e+ Красная молния");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красная молния, используйте её");
     }
 
     public static void GreenJuggernaut(Player p) {
@@ -131,8 +132,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёный Джаггернаут");
-        } else p.sendMessage("§7У вас уже есть Зелёный Джаггернаут, используйте его");
+            tmapi.sendActionbar(p, "§e+ Зелёный Джаггернаут");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёный Джаггернаут, используйте его");
     }
 
     public static void RedJuggernaut(Player p) {
@@ -155,8 +156,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красный Джаггернаут");
-        } else p.sendMessage("§7У вас уже есть Красный Джаггернаут, используйте его");
+            tmapi.sendActionbar(p, "§e+ Красный Джаггернаут");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красный Джаггернаут, используйте его");
     }
 
     public static void GreenShieldbuster(Player p) {
@@ -179,8 +180,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёный противобарьер");
-        } else p.sendMessage("§7У вас уже есть Зелёный противобарьер, используйте его");
+            tmapi.sendActionbar(p, "§e+ Зелёный противобарьер");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёный противобарьер, используйте его");
     }
 
     public static void RedShieldbuster(Player p) {
@@ -203,8 +204,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красный противобарьер");
-        } else p.sendMessage("§7У вас уже есть Красный противобарьер, используйте его");
+            tmapi.sendActionbar(p, "§e+ Красный противобарьер");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красный противобарьер, используйте его");
     }
 
     public static void GreenTomahawk(Player p) {
@@ -227,8 +228,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёный томагавк");
-        } else p.sendMessage("§7У вас уже есть Зелёный томагавк, используйте его");
+            tmapi.sendActionbar(p, "§e+ Зелёный томагавк");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёный томагавк, используйте его");
     }
 
     public static void RedTomahawk(Player p) {
@@ -251,8 +252,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красный томагавк");
-        } else p.sendMessage("§7У вас уже есть Красный томагавк, используйте его");
+            tmapi.sendActionbar(p, "§e+ Красный томагавк");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красный томагавк, используйте его");
     }
 
     public static void GreenShield(Player p) {
@@ -266,8 +267,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Зелёный барьер");
-        } else p.sendMessage("§7У вас уже есть Зелёный барьер, используйте его");
+            tmapi.sendActionbar(p, "§e+ Зелёный барьер");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Зелёный барьер, используйте его");
     }
 
     public static void RedShield(Player p) {
@@ -281,8 +282,8 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Красный барьер");
-        } else p.sendMessage("§7У вас уже есть Красный барьер, используйте его");
+            tmapi.sendActionbar(p, "§e+ Красный барьер");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть Красный барьер, используйте его");
     }
 
     public static void Fireball(Player p) {
@@ -292,7 +293,7 @@ public class GiveItem {
         item.setItemMeta(meta);
         if (!p.getInventory().containsAtLeast(item, 1)) {
             p.getInventory().addItem(item);
-            p.sendMessage("§7+ Огненный шар");
-        } else p.sendMessage("§7У вас уже есть огненный шар, используйте его");
+            tmapi.sendActionbar(p, "§e+ Огненный шар");
+        } else tmapi.sendActionbar(p, "§eУ вас уже есть огненный шар, используйте его");
     }
 }
