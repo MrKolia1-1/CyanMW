@@ -24,14 +24,17 @@ public class Missiles implements Listener {
 
     @EventHandler
     public void HoeClick(PlayerInteractEvent event) {
-        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && item.getType() == Material.GOLD_HOE) {
-            Block block = event.getClickedBlock();
-            World world = block.getWorld();
-            int x = block.getX();
-            int y = block.getY();
-            int z = block.getZ();
-            try {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Player player = event.getPlayer();
+            ItemStack item = player.getInventory().getItemInMainHand();
+            if (item.getType() != Material.GOLD_HOE)
+                return;
+            if (item.hasItemMeta()) {
+                Block block = event.getClickedBlock();
+                World world = block.getWorld();
+                int x = block.getX();
+                int y = block.getY();
+                int z = block.getZ();
                 switch (item.getItemMeta().getDisplayName()) {
                     case "§aЗелёный страж":
                         main.utils.pasteStructure("GreenGuardian", world, x, y + 1, z, -1, -5, -10);
@@ -55,8 +58,8 @@ public class Missiles implements Listener {
                         main.utils.pasteStructure("RedTomahawk", world, x, y + 1, z, 0, -5, 3);
                     default: //Do something
                 }
-                event.getPlayer().getInventory().setItemInMainHand(null);
-            } catch (Exception ignored) {}
+                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+            }
         }
     }
 }
