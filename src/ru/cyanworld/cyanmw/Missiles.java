@@ -58,7 +58,7 @@ public class Missiles implements Listener {
                         main.utils.pasteStructure("RedTomahawk", world, x, y + 1, z, 0, -5, 3);
                     default: //Do something
                 }
-                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                player.getInventory().setItemInMainHand(main.items.air);
             }
         }
     }
