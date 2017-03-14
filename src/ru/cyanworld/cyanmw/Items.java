@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class Items {
     private final Main main;
-    private ItemStack bow, green_chestplate, red_chestplate, green_leggings, red_leggings, green_boots, red_boots;
+    public ItemStack bow, green_chestplate, red_chestplate, green_leggings, red_leggings, green_boots, red_boots, air;
 
     Items(Main main) {
         this.main = main;
@@ -66,20 +66,8 @@ public class Items {
         red_boots_meta.setColor(Color.RED);
         red_boots_meta.setUnbreakable(true);
         red_boots.setItemMeta(red_boots_meta);
+        
+        //Воздух
+        air = new ItemStack(Material.AIR);
     }
-
-    public ItemStack bow() { return bow; }
-
-    public ItemStack greenChestplate() { return green_chestplate; }
-
-    public ItemStack redChestplate() { return red_chestplate; }
-
-    public ItemStack greenLeggings() { return green_leggings; }
-
-    public ItemStack redLeggings() { return red_leggings; }
-
-    public ItemStack greenBoots() { return green_boots; }
-
-    public ItemStack redBoots() { return red_boots; }
-
 }
