@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     public org.bukkit.Server server;
     public FileConfiguration config;
+    public Utils utils;
     public ru.cyanworld.cyanmw.Items items;
 
     @Override
@@ -15,6 +16,7 @@ public class Main extends JavaPlugin {
             config = getConfig();
             config.loadFromString(config.saveToString().replaceAll("&", "§"));
             saveDefaultConfig();
+            utils = new Utils(this);
             items = new Items(this);
         } catch (Exception ex) {
             ex.printStackTrace();
