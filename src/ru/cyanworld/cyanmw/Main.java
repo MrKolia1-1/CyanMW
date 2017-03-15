@@ -18,6 +18,7 @@ public class Main extends JavaPlugin {
             saveDefaultConfig();
             utils = new Utils(this);
             items = new Items(this);
+            server.getCommandMap().register("cyanmw", new MainCommand(this));
         } catch (Exception ex) {
             ex.printStackTrace();
             server.shutdown();

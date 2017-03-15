@@ -66,7 +66,7 @@ public class Items {
         red_boots_meta.setColor(Color.RED);
         red_boots_meta.setUnbreakable(true);
         red_boots.setItemMeta(red_boots_meta);
-        
+
         //Воздух
         air = new ItemStack(Material.AIR);
     }

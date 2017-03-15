@@ -1,6 +1,5 @@
 package ru.cyanworld.cyanmw;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -38,24 +37,34 @@ public class Missiles implements Listener {
                 switch (item.getItemMeta().getDisplayName()) {
                     case "§aЗелёный страж":
                         main.utils.pasteStructure("GreenGuardian", world, x, y + 1, z, -1, -5, -10);
+                        break;
                     case "§cКрасный страж":
                         main.utils.pasteStructure("RedGuardian", world, x, y + 1, z, -1, -5, 3);
+                        break;
                     case "§aЗелёная молния":
                         main.utils.pasteStructure("GreenLightning", world, x, y + 1, z, -1, -5, -12);
+                        break;
                     case "§cКрасная молния":
                         main.utils.pasteStructure("RedLightning", world, x, y + 1, z, -1, -5, 4);
+                        break;
                     case "§aЗелёный Джаггернаут":
                         main.utils.pasteStructure("GreenJuggernaut", world, x, y + 1, z, -1, -6, -13);
+                        break;
                     case "§cКрасный Джаггернаут":
                         main.utils.pasteStructure("RedJuggernaut", world, x, y + 1, z, -1, -6, 3);
+                        break;
                     case "§aЗелёный противобарьер":
                         main.utils.pasteStructure("GreenShieldbuster", world, x, y + 1, z, -1, -6, -17);
+                        break;
                     case "§cКрасный противобарьер":
                         main.utils.pasteStructure("RedShieldbuster", world, x, y + 1, z, -1, -6, 3);
+                        break;
                     case "§aЗелёный томагавк":
                         main.utils.pasteStructure("GreenTomahawk", world, x, y + 1, z, -1, -5, -15);
+                        break;
                     case "§cКрасный томагавк":
                         main.utils.pasteStructure("RedTomahawk", world, x, y + 1, z, 0, -5, 3);
+                        break;
                     default: //Do something
                 }
                 player.getInventory().setItemInMainHand(main.items.air);

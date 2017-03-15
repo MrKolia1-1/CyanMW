@@ -7,19 +7,22 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Player;
 
 public class Utils {
     private final Main main;
-    Utils(Main main) { this.main = main; }
+
+    Utils(Main main) {
+        this.main = main;
+    }
 
     public void pasteStructure(String name, World world, int x, int y, int z, int posX, int posY, int posZ) {
 
-        Block block = world.getBlockAt(x,y,z);
+        Block block = world.getBlockAt(x, y, z);
 
         block.setType(Material.STRUCTURE_BLOCK);
         BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
-        TileEntityStructure structure = (TileEntityStructure)((CraftWorld)world).getHandle().getTileEntity(pos);
+        TileEntityStructure structure = (TileEntityStructure) ((CraftWorld) world).getHandle().getTileEntity(pos);
         structure.a(loadStructure(name, x, y, z, posX, posY, posZ));
         structure.update();
     }
@@ -46,5 +49,34 @@ public class Utils {
         nbttagcompound.setFloat("integrity", 1.0f);
         nbttagcompound.setLong("seed", 0);
         return nbttagcompound;
+    }
+
+    public void giveItem(String name, Player player) {
+        switch (name) {
+            case "bow":
+                player.getInventory().addItem(main.items.bow);
+                break;
+            case "green_chestplate":
+                player.getInventory().addItem(main.items.green_chestplate);
+                break;
+            case "red_chestplate":
+                player.getInventory().addItem(main.items.red_chestplate);
+                break;
+            case "green_leggings":
+                player.getInventory().addItem(main.items.green_leggings);
+                break;
+            case "red_leggings":
+                player.getInventory().addItem(main.items.red_leggings);
+                break;
+            case "green_boots":
+                player.getInventory().addItem(main.items.green_boots);
+                break;
+            case "red_boots":
+                player.getInventory().addItem(main.items.red_boots);
+                break;
+            default:
+                player.sendMessage("Не известный предмет");
+                break;
+        }
     }
 }
